@@ -1,0 +1,61 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36" version="28.2.3">
+  <diagram name="AWS App Infra Architecture" id="aws-app-infra-1">
+    <mxGraphModel dx="1431" dy="1222" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="800" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="vpc" value="VPC" style="swimlane;fillColor=#E3F2FD;strokeColor=#1565C0;fontSize=16;fontColor=#1565C0;" parent="1" vertex="1">
+          <mxGeometry x="40" y="40" width="1000" height="700" as="geometry" />
+        </mxCell>
+        <mxCell id="public_subnet" value="Public Subnet(s)" style="swimlane;fillColor=#FFFDE7;strokeColor=#FBC02D;fontSize=14;fontColor=#FBC02D;" parent="vpc" vertex="1">
+          <mxGeometry x="30" y="40" width="940" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="alb" value="ALB" style="ellipse;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1976D2;fontSize=12;" parent="public_subnet" vertex="1">
+          <mxGeometry x="430" y="70" width="80" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="waf" value="WAF" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCDD2;strokeColor=#C62828;fontSize=12;" parent="public_subnet" vertex="1">
+          <mxGeometry x="70" y="70" width="80" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cloudfront" value="CloudFront" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#388E3C;fontSize=12;" parent="public_subnet" vertex="1">
+          <mxGeometry x="760" y="70" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="private_subnet" value="Private Subnet(s)" style="swimlane;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=14;fontColor=#7B1FA2;" parent="vpc" vertex="1">
+          <mxGeometry x="30" y="220" width="940" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="fargate" value="Fargate (ECS)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B2EBF2;strokeColor=#00838F;fontSize=12;" parent="private_subnet" vertex="1">
+          <mxGeometry x="410" y="90" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rds" value="RDS (Postgres)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D1C4E9;strokeColor=#512DA8;fontSize=12;" parent="private_subnet" vertex="1">
+          <mxGeometry x="600" y="90" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s3" value="S3 Bucket(s)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#FBC02D;fontSize=12;" parent="vpc" vertex="1">
+          <mxGeometry x="440" y="550" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="secrets" value="AWS Secrets Manager" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1BEE7;strokeColor=#6A1B9A;fontSize=12;" parent="vpc" vertex="1">
+          <mxGeometry x="120" y="530" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="alb_to_fargate" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;strokeColor=#1976D2;" parent="vpc" source="alb" target="fargate" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="alb_to_rds" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;strokeColor=#1976D2;dashed=1;exitX=1;exitY=1;exitDx=0;exitDy=0;" parent="vpc" source="alb" target="rds" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fargate_to_rds" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;strokeColor=#00838F;" parent="vpc" source="fargate" target="rds" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fargate_to_s3" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;strokeColor=#FBC02D;" parent="vpc" source="fargate" target="s3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fargate_to_secrets" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;strokeColor=#6A1B9A;" parent="vpc" source="fargate" target="secrets" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cloudfront_to_alb" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;strokeColor=#388E3C;" parent="vpc" source="cloudfront" target="alb" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="waf_to_alb" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;strokeColor=#C62828;" parent="vpc" source="waf" target="alb" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
